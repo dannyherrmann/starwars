@@ -65,22 +65,48 @@ const renderStarshipsToDOM = (starships) => {
   document.getElementById('app').innerHTML = html
 }
 
-const displayPlanets = async () => {
-  const planetData1 = await fetchPlanets(1)
-  const planetData2 = await fetchPlanets(2)
-  const planetData3 = await fetchPlanets(3)
-  const planetData4 = await fetchPlanets(4)
-  const planetData5 = await fetchPlanets(5)
-  const planetData6 = await fetchPlanets(6)
-  let allPlanets = [...planetData1, ...planetData2, ...planetData3, ...planetData4, ...planetData5, ...planetData6]
-  console.log('allPlanets: ',allPlanets)
-  allPlanets.sort((a, b) => a.diameter - b.diameter)
+// const displayPlanets = async () => {
+//   const planetData1 = await fetchPlanets(1)
+//   const planetData2 = await fetchPlanets(2)
+//   const planetData3 = await fetchPlanets(3)
+//   const planetData4 = await fetchPlanets(4)
+//   const planetData5 = await fetchPlanets(5)
+//   const planetData6 = await fetchPlanets(6)
+//   let allPlanets = [...planetData1, ...planetData2, ...planetData3, ...planetData4, ...planetData5, ...planetData6]
+//   console.log('allPlanets: ',allPlanets)
+//   allPlanets.sort((a, b) => a.diameter - b.diameter)
+//   renderPlanetsToDOM(allPlanets)
+// }
+
+//call the fetch planets function incrementing the page number each time. 
+//each time a page is fetched add it to allPlanets array
+//but I need to stop at some point based on something
+
+const displayPlanetLoop = async () => {
+  
+  let page = 1
+  let allPlanets = []
+  let lastResult = []
+
+  do {
+
+    try {
+
+      const data = await fetchPlanets(page)
+      lastResult = data
+      console.log(`data: `,data)
+      console.log(`lastResult = `,lastResult)
+      allPlanets.push(...data.results)
+      page++
+
+    } catch (err) {console.error(`Oops, something is wrong ${err}`)}
+
+  } while (lastResult.next !== null)
+
+  console.log(`testing api loop`,allPlanets)
+  allPlanets.sort((a,b) => a.diameter - b.diameter)
   renderPlanetsToDOM(allPlanets)
-}
 
-
-const displayPlanets2 = async () => {
-  const planetData = await fetchPlanets()
 }
 
 const renderPlanetsToDOM = (planets) => {
@@ -104,5 +130,7 @@ const renderPlanetsToDOM = (planets) => {
 await displayLuke()
 await displayFilms()
 await displayStarships(4)
-await displayPlanets()
+// await displayPlanets()
+await displayPlanetLoop()
+
 
