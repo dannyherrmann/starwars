@@ -82,6 +82,12 @@ const renderStarshipsToDOM = (starships) => {
 //each time a page is fetched add it to allPlanets array
 //but I need to stop at some point based on something
 
+let button = document.querySelector('#displayPlanets')
+
+button.addEventListener("click", () => {
+  displayPlanetLoop()
+})
+
 const displayPlanetLoop = async () => {
   
   let page = 1
@@ -94,8 +100,6 @@ const displayPlanetLoop = async () => {
 
       const data = await fetchPlanets(page)
       lastResult = data
-      console.log(`data: `,data)
-      console.log(`lastResult = `,lastResult)
       allPlanets.push(...data.results)
       page++
 
@@ -103,7 +107,6 @@ const displayPlanetLoop = async () => {
 
   } while (lastResult.next !== null)
 
-  console.log(`testing api loop`,allPlanets)
   allPlanets.sort((a,b) => a.diameter - b.diameter)
   renderPlanetsToDOM(allPlanets)
 
@@ -127,10 +130,10 @@ const renderPlanetsToDOM = (planets) => {
 
 }
 
-await displayLuke()
-await displayFilms()
-await displayStarships(4)
+// await displayLuke()
+// await displayFilms()
+// await displayStarships(4)
 // await displayPlanets()
-await displayPlanetLoop()
+
 
 

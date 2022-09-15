@@ -10,6 +10,50 @@
     <link rel="stylesheet" href="./styles/main.css">
   </head>
   <body>
+  <div>
+    <button id="displayPlanets" type="button">Run Code</button>
+    <code><pre>const displayPlanetLoop = async () => {
+
+      let page = 1
+      let allPlanets = []
+      let lastResult = []
+    
+      do {
+    
+        try {
+    
+          const data = await fetchPlanets(page)
+          lastResult = data
+          allPlanets.push(...data.results)
+          page++
+    
+        } catch (err) {console.error(`Oops, something is wrong ${err}`)}
+    
+      } while (lastResult.next !== null)
+    
+      allPlanets.sort((a,b) => a.diameter - b.diameter)
+      renderPlanetsToDOM(allPlanets)
+    
+    }
+    
+    const renderPlanetsToDOM = (planets) => {
+    
+      for (const planet of planets) {
+        html += 
+        `&lt;article&gt;
+            &lt;section class="card"&gt;
+              &lt;h3>Planet: ${planet.name}
+            &lt;ul&gt;
+              &lt;li&gt;Diameter: ${planet.diameter}&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;`
+      }
+
+      document.getElementById('app').innerHTML = html
+    
+    }</pre></code>
+  </div>
    <div id="app"></div>
     
     <script type="module" src="./scripts/main.js" async defer></script>
