@@ -1,19 +1,46 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 pre {
   color: black;
-  background: white;
+  background-color: white;
   width: 550px;
   padding: 20px;
   border-radius: 30px;
 }
 
 body {
-  background-color: black;
+  background-color: #191919;
   color: white;
+  padding: 30px;
 }
 
 .card {
-  border: 1px solid #BFAA01;
+  border: 1px solid #15b0f6;
   padding: 10px;
   max-width: 200px;
 }
+
+.results {
+  border: #fc0d5a 10px groove;
+  width: 500px;
+  height: 500px;
+  padding: 20px;
+  margin-left: 50px;
+}
+
+.results2 {
+  width: 100%;
+}
+.apiResults {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+/* .flexItem {
+  width: -moz-fit-content;
+  width: fit-content;
+} */
 

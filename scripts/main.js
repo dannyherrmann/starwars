@@ -1,14 +1,32 @@
 import {fetchLuke, fetchFilms, fetchStarshipsByPage, fetchPlanets} from "./starWarsData.js"
 
+const baseHTML = async () => {
+  document.getElementById("app").innerHTML = 
+  ` <img src="styles/starwars-logo.jpg">
+    <h1>Let's learn the Star Wars API !!!</h1>
+    <p>Select any API call below and then click the "FETCH API RESULTS" button to display the data</p>
+    <p>The "CLEAR API RESULTS" button can be used to clear out the currently displayed results</p>
+    <input id ="displayStarshipsRadio" name="displayOption" type="radio" />
+    <label for="displayStarshipsRadio">Display the number of starships returned from page 4</label><br>
+    <input id ="displayPlanetsRadio" name="displayOption" type="radio" />
+    <label for="displayPlanetsRadio">List the planets in order of size (diameter) from smallest to largest</label><br>
+    <input id="displayLukeRadio" name="displayOption" type="radio" />
+    <label for="displayLukeRadio">Display Luke Skywalker data</label><br><br>
+    <button id="runCode" type="button">FETCH API RESULTS</button><br>
+    <button id="delete" type="button">CLEAR API RESULTS</button><br><br>`
+}
+
+baseHTML()
 
 const displayLuke = async () => {
   const data = await fetchLuke()
   renderLukeToDOM(data)
 }
 
-let html = ''
+
 
 const renderLukeToDOM = (data) => {
+  let html = ''
   html += `
     <article>
       <section class="card">
@@ -17,7 +35,7 @@ const renderLukeToDOM = (data) => {
       </section>
     </article>
   `
-  document.getElementById('app').innerHTML = html
+  document.getElementById('apiResults').innerHTML = html
 }
 
 const displayFilms = async () => {
@@ -31,6 +49,7 @@ const displayFilms = async () => {
 const renderFilmsToDOM = (films) => {
 
   for (const film of films) {
+    let html = ''
     html += `
     <article>
       <section class="card">
@@ -43,7 +62,7 @@ const renderFilmsToDOM = (films) => {
   `
   }
 
-  document.getElementById('app').innerHTML = html
+  document.getElementById('apiResults').innerHTML = html
 
 }
 
@@ -55,14 +74,15 @@ const displayStarships = async (num) => {
 
 const renderStarshipsToDOM = (starships) => {
   console.log(`starship_count: `, starships.results.length)
+  let html = ''
   html += `
-    <article>
+    <article class="flexItem">
       <section class="card">
         <p>There are ${starships.results.length} starships on page #4</p>
       </section>
     </article>
   `
-  document.getElementById('app').innerHTML = html
+  document.getElementById('apiResults').innerHTML = html
 }
 
 // const displayPlanets = async () => {
@@ -82,10 +102,26 @@ const renderStarshipsToDOM = (starships) => {
 //each time a page is fetched add it to allPlanets array
 //but I need to stop at some point based on something
 
-let button = document.querySelector('#displayPlanets')
+let runCodeButton = document.querySelector('#runCode')
 
-button.addEventListener("click", () => {
-  displayPlanetLoop()
+const planetRadio = document.querySelector('input[id="displayPlanetsRadio"]')
+const lukeRadio = document.querySelector('input[id="displayLukeRadio"]')
+const starshipRadio = document.querySelector('input[id="displayStarshipsRadio"]')
+
+runCodeButton.addEventListener("click", () => {
+  if (planetRadio.checked) {
+    displayPlanetBasic(1)
+  } else if (lukeRadio.checked) {
+    displayLuke()
+  } else if (starshipRadio.checked) {
+    displayStarships(4)
+  }
+})
+
+const deleteButton = document.querySelector('#delete')
+
+deleteButton.addEventListener("click", () => {
+  document.getElementById('apiResults').innerHTML = ''
 })
 
 const displayPlanetLoop = async () => {
@@ -112,21 +148,28 @@ const displayPlanetLoop = async () => {
 
 }
 
-const renderPlanetsToDOM = (planets) => {
+const displayPlanetBasic = async (page) => {
+  const data = await fetchPlanets(page)
+  const results = data.results
+  results.sort((a,b) => a.diameter - b.diameter)
+  renderPlanetsToDOM(results)
+}
 
+const renderPlanetsToDOM = (planets) => {
+  let html = ''
   for (const planet of planets) {
-    html += `
-      <article>
-        <section class="card">
-        <h3>Planet: ${planet.name}
-          <ul>
-            <li>Diameter: ${planet.diameter}</li>
-          </ul>
-        </section>
-      </article>
-    `
+    html += 
+    `<article>
+    <section class="card">
+      <h3>Planet: ${planet.name}
+      <ul>
+        <li>Diameter: ${planet.diameter}</li>
+      </ul>
+    </section>
+</article>`
   }
-  document.getElementById('app').innerHTML = html
+
+  document.getElementById('apiResults').innerHTML = html
 
 }
 

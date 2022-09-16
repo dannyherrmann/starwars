@@ -10,9 +10,18 @@
     <link rel="stylesheet" href="./styles/main.css">
   </head>
   <body>
-  <div>
-    <button id="displayPlanets" type="button">Run Code</button>
-    <code><pre>const displayPlanetLoop = async () => {
+  <div class="container">
+  <div id="app" class="test">
+    <!-- <img src="styles/starwars-logo.jpg">
+    <h1>Let's learn the Star Wars API !!!</h1>
+    <input id ="displayPlanetsRadio" name="displayOption" type="radio" />
+    <label for="displayPlanetsRadio">Display Planets</label><br>
+    <input id="displayLukeRadio" name="displayOption" type="radio" />
+    <label for="displayLukeRadio">Display Luke</label><br><br>
+    <button id="runCode" type="button">run code</button>
+    <code><pre>
+      
+      const displayPlanetLoop = async () => {
 
       let page = 1
       let allPlanets = []
@@ -42,20 +51,24 @@
         html += 
         `&lt;article&gt;
             &lt;section class="card"&gt;
-              &lt;h3>Planet: ${planet.name}
-            &lt;ul&gt;
-              &lt;li&gt;Diameter: ${planet.diameter}&lt;/li&gt;
-            &lt;/ul&gt;
+              &lt;h3&gt;Planet: ${planet.name}
+              &lt;ul&gt;
+                &lt;li&gt;Diameter: ${planet.diameter}&lt;/li&gt;
+              &lt;/ul&gt;
             &lt;/section&gt;
         &lt;/article&gt;`
       }
 
       document.getElementById('app').innerHTML = html
     
-    }</pre></code>
+    }</pre></code> -->
   </div>
-   <div id="app"></div>
-    
+   <div class="results"><h3>API RESULTS:</h3><br>
+    <div id="apiResults">
+
+    </div>
+   </div>
+   </div>
     <script type="module" src="./scripts/main.js" async defer></script>
   </body>
 </html>
