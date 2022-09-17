@@ -10,38 +10,39 @@
 <body>
 <code>
 <pre>
-    //Get Luke Skywalker
-    export const fetchLuke = async () => {
-    const dataFetch = await fetch(`${API}/people/1`)
-    const lukeData = await dataFetch.json()
-    return lukeData
-    }
+//Get Luke Skywalker
+
+export const fetchLuke = async () => {
+  const dataFetch = await fetch(`${API}/people/1`)
+  const lukeData = await dataFetch.json()
+  return lukeData
+}
     
-    const displayLuke = async () => {
-        const data = await fetchLuke()
-        renderLukeToDOM(data)
-      }
+const displayLuke = async () => {
+  const data = await fetchLuke()
+  renderLukeToDOM(data)
+}
       
-      const renderLukeToDOM = (data) => {
-        document.getElementById('apiResults').innerHTML = ''
-        document.getElementById('codeSnippets').innerHTML = ''
-        let html = ''
-        html += `
-        &lt;div class="results"&gt;
-        &lt;h3>Star Wars API Results:&lt;/h3&gt;&lt;br&gt;
-        &lt;article id="code"&gt;
-        &lt;section class="card"&gt;
-         &lt;p>Name: ${data.name}&lt;/p&gt;
-         &lt;p>height: ${data.height}&lt;/p&gt;
-         &lt;/section&gt;
-         &lt;/article>&lt;/div&gt;
-        `
-        document.getElementById('apiResults').innerHTML = html
-        document.getElementById('codeSnippets').innerHTML = 
-        `&lt;h3&gt;JavaScript:&lt;/h3&gt;
-        &lt;iframe src="fetchPlanetsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" &gt;
-        &lt;/iframe&gt;`
-      }
+const renderLukeToDOM = (data) => {
+  document.getElementById('apiResults').innerHTML = ''
+  document.getElementById('codeSnippets').innerHTML = ''
+  let html = ''
+  html += `
+  &lt;div class="results"&gt;
+  &lt;h3>Star Wars API Results:&lt;/h3&gt;&lt;br&gt;
+  &lt;article id="code"&gt;
+  &lt;section class="card"&gt;
+  &lt;p>Name: ${data.name}&lt;/p&gt;
+  &lt;p>height: ${data.height}&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;/article>&lt;/div&gt;
+  `
+  document.getElementById('apiResults').innerHTML = html
+  document.getElementById('codeSnippets').innerHTML = 
+  `&lt;h3&gt;JavaScript:&lt;/h3&gt;
+  &lt;iframe src="fetchPlanetsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" &gt;
+  &lt;/iframe&gt;`
+}
 </pre>
 </code>
     

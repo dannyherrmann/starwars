@@ -115,3 +115,17 @@ iframe {
 h3 {
   text-align: center;
 }
+
+.resultsHeader {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  background-color: #f9d010;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+}
+
+.right {
+  border-left: 5px black solid;
+  margin-left: 15px;
+}

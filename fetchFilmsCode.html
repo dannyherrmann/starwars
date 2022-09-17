@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/code.css">
+</head>
+<body>
+<code>
+<pre>
+const displayFilms = async () =&gt; {
+    const filmData = await fetchFilms();
+    console.log("Film Data: ", filmData);
+    const filmResults = filmData.results;
+    console.log("Film Results: ", filmResults);
+    renderFilmsToDOM(filmResults);
+  };
+  
+const renderFilmsToDOM = (films) =&gt; {
+    document.getElementById("apiResults").innerHTML = "";
+    document.getElementById("codeSnippets").innerHTML = "";
+    let html = `&lt;div class="results"&gt;&lt;h3&gt;Star Wars API Results:&lt;/h3&gt;&lt;br&gt;`;
+    for (const film of films) {
+      html += `
+      &lt;article&gt;
+        &lt;section class="card"&gt;
+          &lt;p&gt;&lt;b&gt;Title:&lt;/b&gt; ${film.title}&lt;/p&gt;
+          &lt;p&gt;&lt;b&gt;Director:&lt;/b&gt; ${film.director}&lt;/p&gt;
+          &lt;p&gt;&lt;b&gt;Release Date:&lt;/b&gt; ${film.release_date}
+          &lt;p&gt;&lt;b&gt;Opening Crawl:&lt;/b&gt; ${film.opening_crawl}
+        &lt;/section&gt;
+      &lt;/article&gt;
+    `;
+    }
+  
+    html += `&lt;/div&gt;`;
+    document.getElementById("apiResults").innerHTML = html;
+    document.getElementById("codeSnippets").innerHTML = `&lt;h3&gt;JavaScript:&lt;/h3&gt;
+    &lt;iframe src="fetchFilmsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" &gt;
+    &lt;/iframe&gt;`;
+  };
+</pre>
+</code>
+    
+</body>
+</html>

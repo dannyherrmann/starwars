@@ -22,6 +22,7 @@ export const fetchStarshipsByPage = async (pageNum) => {
 }
 
 //Get Plants by pageNum
+
 export const fetchPlanets = async (pageNum) => {
   const dataFetch = await fetch(`${API}/planets/?page=${pageNum}`)
   const planetData = await dataFetch.json()

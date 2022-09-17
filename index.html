@@ -15,56 +15,6 @@
   <body>
   <div class="container">
   <div id="app" class="test">
-    <!-- <img src="styles/starwars-logo.jpg">
-    <h1>Let's learn the Star Wars API !!!</h1>
-    <input id ="displayPlanetsRadio" name="displayOption" type="radio" />
-    <label for="displayPlanetsRadio">Display Planets</label><br>
-    <input id="displayLukeRadio" name="displayOption" type="radio" />
-    <label for="displayLukeRadio">Display Luke</label><br><br>
-    <button id="runCode" type="button">run code</button>
-    <code><pre>
-      
-      const displayPlanetLoop = async () => {
-
-      let page = 1
-      let allPlanets = []
-      let lastResult = []
-    
-      do {
-    
-        try {
-    
-          const data = await fetchPlanets(page)
-          lastResult = data
-          allPlanets.push(...data.results)
-          page++
-    
-        } catch (err) {console.error(`Oops, something is wrong ${err}`)}
-    
-      } while (lastResult.next !== null)
-    
-      allPlanets.sort((a,b) => a.diameter - b.diameter)
-      renderPlanetsToDOM(allPlanets)
-    
-    }
-    
-    const renderPlanetsToDOM = (planets) => {
-    
-      for (const planet of planets) {
-        html += 
-        `&lt;article&gt;
-            &lt;section class="card"&gt;
-              &lt;h3&gt;Planet: ${planet.name}
-              &lt;ul&gt;
-                &lt;li&gt;Diameter: ${planet.diameter}&lt;/li&gt;
-              &lt;/ul&gt;
-            &lt;/section&gt;
-        &lt;/article&gt;`
-      }
-
-      document.getElementById('app').innerHTML = html
-    
-    }</pre></code> -->
   </div>
   <div class="bottom">
     <div id="apiResults">

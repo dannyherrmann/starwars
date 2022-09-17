@@ -8,57 +8,57 @@
     <link rel="stylesheet" href="./styles/code.css">
 </head>
 <body>
-    <code>
-        <pre>
-const displayPlanetLoop = async () => {
-  
-  let page = 1
-  let allPlanets = []
-  let lastResult = []
-              
-  do {
-              
-    try {
-              
-      const data = await fetchPlanets(page)
-      lastResult = data
-      allPlanets.push(...data.results)
-      page++
-              
-    } catch (err) {console.error(`Oops, something is wrong ${err}`)}
-              
-    } while (lastResult.next !== null)
-              
-    allPlanets.sort((a,b) => a.diameter - b.diameter)
-    renderPlanetsToDOM(allPlanets)
-              
-    }
-              
-const renderPlanetsToDOM = (planets) => {
+<code>
+<pre>
+  //Get Planets by pageNum
 
-  document.getElementById('apiResults').innerHTML = ''
-  document.getElementById('codeSnippets').innerHTML = ''
-
-  let html = `&lt;div class="results"&gt;&lt;h3&gt;Star Wars API Results:&lt;/h3&gt;&lt;br&gt;`
-  let planetNum = 1
-  for (const planet of planets) {
-  html += 
-  ` Planet #${planetNum}: ${planet.name}<br>
-    Diameter: ${planet.diameter}&lt;br&gt;&lt;br&gt;`
-              
-    planetNum++
+  export const fetchPlanets = async (pageNum) =&gt; {
+    const dataFetch = await fetch(`${API}/planets/?page=${pageNum}`)
+    const planetData = await dataFetch.json()
+    return planetData
   }
   
-  html += `&lt;/div&gt;`
-              
-  document.getElementById('apiResults').innerHTML = html
-  document.getElementById('codeSnippets').innerHTML = 
-  `&lt;h3&gt;JavaScript:&lt;/h3&gt;
-  &lt;iframe src="code.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" &gt;
-  &lt;/iframe&gt;`
-              
-}
-        </pre>
-    </code>
+  const displayPlanetLoop = async () =&gt; {
+    let page = 1;
+    let allPlanets = [];
+    let lastResult = [];
+  
+    do {
+      try {
+        const data = await fetchPlanets(page);
+        lastResult = data;
+        allPlanets.push(...data.results);
+        page++;
+      } catch (err) {
+        console.error(`Oops, something is wrong ${err}`);
+      }
+    } while (lastResult.next !== null);
+  
+    allPlanets.sort((a, b) =&gt; a.diameter - b.diameter);
+    renderPlanetsToDOM(allPlanets);
+  };
+  
+  const renderPlanetsToDOM = (planets) =&gt; {
+    document.getElementById("apiResults").innerHTML = "";
+    document.getElementById("codeSnippets").innerHTML = "";
+    let html = `&lt;h3 class="resultsHeader"&gt;Star Wars API Results:&lt;/h3&gt;&lt;div class="results"&gt;`;
+    let planetNum = 1;
+    for (const planet of planets) {
+      html += 
+      ` Planet #${planetNum}: ${planet.name}&lt;br&gt;
+        Diameter: ${planet.diameter}&lt;br&gt;&lt;br&gt;`;
+  
+      planetNum++;
+    }
+    html += `&lt;/div&gt;`;
+  
+    document.getElementById("apiResults").innerHTML = html;
+    document.getElementById("codeSnippets").innerHTML = 
+    `&lt;h3 class="resultsHeader right"&gt;JavaScript:&lt;/h3&gt;
+    &lt;iframe src="fetchPlanetsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" &gt;
+    &lt;/iframe&gt;`;
+  };
+</pre>
+</code>
 </body>
 </html>

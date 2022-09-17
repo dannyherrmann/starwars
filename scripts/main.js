@@ -1,8 +1,12 @@
-import {fetchLuke, fetchFilms, fetchStarshipsByPage, fetchPlanets} from "./starWarsData.js"
+import {
+  fetchLuke,
+  fetchFilms,
+  fetchStarshipsByPage,
+  fetchPlanets,
+} from "./starWarsData.js";
 
 const baseHTML = async () => {
-  document.getElementById("app").innerHTML = 
-  ` 
+  document.getElementById("app").innerHTML = ` 
   <div class="outer">
   <div class="header">
     <h1>Let's learn the ... </h1>
@@ -10,8 +14,8 @@ const baseHTML = async () => {
     <h1>API !!!</h1>
     </div></div>
     <div class="form">
-    <p>Select any API call below and then click the "FETCH API RESULTS" button to display the data</p>
-    <p>The "CLEAR API RESULTS" button can be used to clear out the currently displayed API results</p></div>
+    <p>1. Select any API call below and then click the "FETCH API RESULTS" button to display the data (required)</p>
+    <p>2. The "CLEAR API RESULTS" button can be used to clear out the currently displayed API results (optional)</p></div>
     <div class="inputs">
     <input id="displayLukeRadio" name="displayOption" type="radio" />
     <label for="displayLukeRadio">Display Luke Skywalker data</label><br>
@@ -22,22 +26,22 @@ const baseHTML = async () => {
     <input id ="displayPlanetsRadio" name="displayOption" type="radio" />
     <label for="displayPlanetsRadio">List the planets in order of size (diameter) from smallest to largest</label><br><br>
     <button id="runCode" type="button" class="button">FETCH API RESULTS</button>
-    <button id="delete" type="button" class="button">CLEAR API RESULTS</button><br><br></div>`
-}
+    <button id="delete" type="button" class="button">CLEAR API RESULTS</button><br><br></div>`;
+};
 
-baseHTML()
+baseHTML();
 
 const displayLuke = async () => {
-  const data = await fetchLuke()
-  renderLukeToDOM(data)
-}
+  const data = await fetchLuke();
+  renderLukeToDOM(data);
+};
 
 const renderLukeToDOM = (data) => {
-  document.getElementById('apiResults').innerHTML = ''
-  document.getElementById('codeSnippets').innerHTML = ''
-  let html = ''
+  document.getElementById("apiResults").innerHTML = "";
+  document.getElementById("codeSnippets").innerHTML = "";
+  let html = "";
   html += `
-  <h3>Star Wars API Results:</h3>
+  <h3 class="resultsHeader">Star Wars API Results:</h3>
   <div class="results">
     <article id="code">
       <section class="card">
@@ -45,27 +49,25 @@ const renderLukeToDOM = (data) => {
         <p>height: ${data.height}</p>
       </section>
     </article></div>
-  `
-  document.getElementById('apiResults').innerHTML = html
-  document.getElementById('codeSnippets').innerHTML = 
-  `<h3>JavaScript:</h3>
+  `;
+  document.getElementById("apiResults").innerHTML = html;
+  document.getElementById("codeSnippets").innerHTML = `<h3 class="resultsHeader right">JavaScript:</h3>
   <iframe src="fetchLukeCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" >
-  </iframe>`
-}
-
+  </iframe>`;
+};
 
 const displayFilms = async () => {
-  const filmData = await fetchFilms()
-  console.log('Film Data: ',filmData)
-  const filmResults = filmData.results
-  console.log('Film Results: ',filmResults)
-  renderFilmsToDOM(filmResults)
-}
+  const filmData = await fetchFilms();
+  console.log("Film Data: ", filmData);
+  const filmResults = filmData.results;
+  console.log("Film Results: ", filmResults);
+  renderFilmsToDOM(filmResults);
+};
 
 const renderFilmsToDOM = (films) => {
-  document.getElementById('apiResults').innerHTML = ''
-  document.getElementById('codeSnippets').innerHTML = ''
-  let html = `<div class="results"><h3>Star Wars API Results:</h3><br>`
+  document.getElementById("apiResults").innerHTML = "";
+  document.getElementById("codeSnippets").innerHTML = "";
+  let html = `<h3 class="resultsHeader">Star Wars API Results:</h3><div class="results"><br>`;
   for (const film of films) {
     html += `
     <article>
@@ -76,126 +78,118 @@ const renderFilmsToDOM = (films) => {
         <p><b>Opening Crawl:</b> ${film.opening_crawl}
       </section>
     </article>
-  `
+  `;
   }
 
-  html += `</div>`
-  document.getElementById('apiResults').innerHTML = html
-  document.getElementById('codeSnippets').innerHTML = `
-  <div class="codeSnippetStyle">
-  <h3>JavaScript:</h3>
-  <img src="styles/films-code.jpg"></div>`
-
-}
+  html += `</div>`;
+  document.getElementById("apiResults").innerHTML = html;
+  document.getElementById("codeSnippets").innerHTML = `<h3 class="resultsHeader right">JavaScript:</h3>
+  <iframe src="fetchFilmsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" >
+  </iframe>`;
+};
 
 const displayStarships = async (num) => {
-  const starshipData = await fetchStarshipsByPage(num)
-  console.log(`Starship Data: `, starshipData)
-  renderStarshipsToDOM(starshipData)
-}
+  const starshipData = await fetchStarshipsByPage(num);
+  console.log(`Starship Data: `, starshipData);
+  renderStarshipsToDOM(starshipData);
+};
 
 const renderStarshipsToDOM = (starships) => {
-  document.getElementById('apiResults').innerHTML = ''
-  document.getElementById('codeSnippets').innerHTML = ''
-  let html = ''
+  document.getElementById("apiResults").innerHTML = "";
+  document.getElementById("codeSnippets").innerHTML = "";
+  let html = "";
   html += `
+  <h3 class="resultsHeader">Star Wars API Results:</h3>
   <div class="results">
-  <h3>Star Wars API Results:</h3><br>
     <article class="flexItem">
       <section class="card">
         <p>There are ${starships.results.length} starships on page #4</p>
       </section>
     </article></div>
-  `
-  document.getElementById('apiResults').innerHTML = html
-  document.getElementById('codeSnippets').innerHTML = `
-  <div class="codeSnippetStyle">
-  <h3>JavaScript:</h3>
-  <img src="styles/starship-code.jpg"></div>`
-}
+  `;
+  document.getElementById("apiResults").innerHTML = html;
+  document.getElementById("codeSnippets").innerHTML = `<h3 class="resultsHeader right">JavaScript:</h3>
+  <iframe src="fetchStarshipsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" >
+  </iframe>`;
+};
 
-let runCodeButton = document.querySelector('#runCode')
+let runCodeButton = document.querySelector("#runCode");
 
-const planetRadio = document.querySelector('input[id="displayPlanetsRadio"]')
-const lukeRadio = document.querySelector('input[id="displayLukeRadio"]')
-const starshipRadio = document.querySelector('input[id="displayStarshipsRadio"]')
-const filmRadio = document.querySelector('input[id="displayFilmsRadio"]')
+const planetRadio = document.querySelector('input[id="displayPlanetsRadio"]');
+const lukeRadio = document.querySelector('input[id="displayLukeRadio"]');
+const starshipRadio = document.querySelector(
+  'input[id="displayStarshipsRadio"]'
+);
+const filmRadio = document.querySelector('input[id="displayFilmsRadio"]');
 
 runCodeButton.addEventListener("click", () => {
   if (planetRadio.checked) {
-    displayPlanetLoop()
+    displayPlanetLoop();
     planetRadio.checked = false;
   } else if (lukeRadio.checked) {
-    displayLuke()
-    lukeRadio.checked = false
+    displayLuke();
+    lukeRadio.checked = false;
   } else if (starshipRadio.checked) {
-    displayStarships(4)
-    starshipRadio.checked = false
+    displayStarships(4);
+    starshipRadio.checked = false;
   } else if (filmRadio.checked) {
-    displayFilms()
-    filmRadio.checked = false
+    displayFilms();
+    filmRadio.checked = false;
   }
-})
+});
 
-const deleteButton = document.querySelector('#delete')
+const deleteButton = document.querySelector("#delete");
 
 deleteButton.addEventListener("click", () => {
-  document.getElementById('apiResults').innerHTML = ''
-  document.getElementById('codeSnippets').innerHTML = ''
-})
+  document.getElementById("apiResults").innerHTML = "";
+  document.getElementById("codeSnippets").innerHTML = "";
+});
 
-document.addEventListener("click", (event) => {
-  if (event.target.id === "showCode") {
-    document.getElementById('codeSnippets').innerHTML = `
-    <div class="codeSnippetStyle">
-    <img src="styles/fetchLukeCode.jpg"></div>
-    `
-  }
-})
+// document.addEventListener("click", (event) => {
+//   if (event.target.id === "showCode") {
+//     document.getElementById("codeSnippets").innerHTML = `
+//     <div class="codeSnippetStyle">
+//     <img src="styles/fetchLukeCode.jpg"></div>
+//     `;
+//   }
+// });
 
 const displayPlanetLoop = async () => {
-  
-  let page = 1
-  let allPlanets = []
-  let lastResult = []
+  let page = 1;
+  let allPlanets = [];
+  let lastResult = [];
 
   do {
-
     try {
+      const data = await fetchPlanets(page);
+      lastResult = data;
+      allPlanets.push(...data.results);
+      page++;
+    } catch (err) {
+      console.error(`Oops, something is wrong ${err}`);
+    }
+  } while (lastResult.next !== null);
 
-      const data = await fetchPlanets(page)
-      lastResult = data
-      allPlanets.push(...data.results)
-      page++
-
-    } catch (err) {console.error(`Oops, something is wrong ${err}`)}
-
-  } while (lastResult.next !== null)
-
-  allPlanets.sort((a,b) => a.diameter - b.diameter)
-  renderPlanetsToDOM(allPlanets)
-
-}
+  allPlanets.sort((a, b) => a.diameter - b.diameter);
+  renderPlanetsToDOM(allPlanets);
+};
 
 const renderPlanetsToDOM = (planets) => {
-  document.getElementById('apiResults').innerHTML = ''
-  document.getElementById('codeSnippets').innerHTML = ''
-  let html = `<h3>Star Wars API Results:</h3><div class="results">`
-  let planetNum = 1
+  document.getElementById("apiResults").innerHTML = "";
+  document.getElementById("codeSnippets").innerHTML = "";
+  let html = `<h3 class="resultsHeader">Star Wars API Results:</h3><div class="results">`;
+  let planetNum = 1;
   for (const planet of planets) {
-    html += 
-    ` Planet #${planetNum}: ${planet.name}<br>
-      Diameter: ${planet.diameter}<br><br>`
+    html += ` Planet #${planetNum}: ${planet.name}<br>
+      Diameter: ${planet.diameter}<br><br>`;
 
-      planetNum++
+    planetNum++;
   }
-  html += `</div>`
+  html += `</div>`;
 
-  document.getElementById('apiResults').innerHTML = html
-  document.getElementById('codeSnippets').innerHTML = `<h3>JavaScript:</h3><iframe src="fetchPlanetsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" >
-  </iframe>`
-
-}
-
-
-
+  document.getElementById("apiResults").innerHTML = html;
+  document.getElementById(
+    "codeSnippets"
+  ).innerHTML = `<h3 class="resultsHeader right">JavaScript:</h3><iframe src="fetchPlanetsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" >
+  </iframe>`;
+};

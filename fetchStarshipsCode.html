@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/code.css">
+</head>
+<body>
+<code>
+<pre>
+// Get Starships by pageNum
+export const fetchStarshipsByPage = async (pageNum) =&gt; {
+  const dataFetch = await fetch(`${API}starships/?page=${pageNum}`)
+  const starshipData = await dataFetch.json()
+  return starshipData
+}
+
+const displayStarships = async (num) =&gt; {
+  const starshipData = await fetchStarshipsByPage(num);
+  console.log(`Starship Data: `, starshipData);
+  renderStarshipsToDOM(starshipData);
+};
+
+const renderStarshipsToDOM = (starships) =&gt; {
+  document.getElementById("apiResults").innerHTML = "";
+  document.getElementById("codeSnippets").innerHTML = "";
+  let html = "";
+  html += `
+  &lt;div class="results"&gt;
+  &lt;h3&gt;Star Wars API Results:&lt;/h3&gt;&lt;br&gt;
+    &lt;article class="flexItem"&gt;
+      &lt;section class="card"&gt;
+        &lt;p&gt;There are ${starships.results.length} starships on page #4&lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/article&gt;&lt;/div&gt;
+  `;
+  document.getElementById("apiResults").innerHTML = html;
+  document.getElementById("codeSnippets").innerHTML = `
+  &lt;div class="codeSnippetStyle"&gt;
+  &lt;h3&gt;JavaScript:&lt;/h3&gt;
+  &lt;img src="styles/starship-code.jpg"&gt;&lt;/div&gt;`;
+};
+</pre>
+</code>
+    
+</body>
+</html>
