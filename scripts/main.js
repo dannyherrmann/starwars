@@ -2,18 +2,27 @@ import {fetchLuke, fetchFilms, fetchStarshipsByPage, fetchPlanets} from "./starW
 
 const baseHTML = async () => {
   document.getElementById("app").innerHTML = 
-  ` <img src="styles/starwars-logo.jpg">
-    <h1>Let's learn the Star Wars API !!!</h1>
+  ` 
+  <div class="outer">
+  <div class="header">
+    <h1>Let's learn the ... </h1>
+    <img src="styles/starwars-logo.jpg">
+    <h1>API !!!</h1>
+    </div></div>
+    <div class="form">
     <p>Select any API call below and then click the "FETCH API RESULTS" button to display the data</p>
-    <p>The "CLEAR API RESULTS" button can be used to clear out the currently displayed results</p>
+    <p>The "CLEAR API RESULTS" button can be used to clear out the currently displayed API results</p></div>
+    <div class="inputs">
+    <input id="displayLukeRadio" name="displayOption" type="radio" />
+    <label for="displayLukeRadio">Display Luke Skywalker data</label><br>
     <input id ="displayStarshipsRadio" name="displayOption" type="radio" />
     <label for="displayStarshipsRadio">Display the number of starships returned from page 4</label><br>
+    <input id="displayFilmsRadio" name="displayOption" type="radio" />
+    <label for="displayFilmsRadio">Display all the films and their release date</label><br>
     <input id ="displayPlanetsRadio" name="displayOption" type="radio" />
-    <label for="displayPlanetsRadio">List the planets in order of size (diameter) from smallest to largest</label><br>
-    <input id="displayLukeRadio" name="displayOption" type="radio" />
-    <label for="displayLukeRadio">Display Luke Skywalker data</label><br><br>
-    <button id="runCode" type="button">FETCH API RESULTS</button><br>
-    <button id="delete" type="button">CLEAR API RESULTS</button><br><br>`
+    <label for="displayPlanetsRadio">List the planets in order of size (diameter) from smallest to largest</label><br><br>
+    <button id="runCode" type="button" class="button">FETCH API RESULTS</button>
+    <button id="delete" type="button" class="button">CLEAR API RESULTS</button><br><br></div>`
 }
 
 baseHTML()
@@ -26,13 +35,14 @@ const displayLuke = async () => {
 const renderLukeToDOM = (data) => {
   let html = ''
   html += `
+  <div class="results">
+  <h3>Star Wars API Results:</h3><br>
     <article id="code">
       <section class="card">
         <p>Name: ${data.name}</p>
         <p>height: ${data.height}</p>
       </section>
-    </article><br>
-    <button id="showCode" type="button">SHOW CODE</button>
+    </article></div>
   `
   document.getElementById('apiResults').innerHTML = html
 }
@@ -47,9 +57,8 @@ const displayFilms = async () => {
 }
 
 const renderFilmsToDOM = (films) => {
-
+  let html = `<div class="results"><h3>Star Wars API Results:</h3><br>`
   for (const film of films) {
-    let html = ''
     html += `
     <article>
       <section class="card">
@@ -62,6 +71,7 @@ const renderFilmsToDOM = (films) => {
   `
   }
 
+  html += `</div>`
   document.getElementById('apiResults').innerHTML = html
 
 }
@@ -76,46 +86,42 @@ const renderStarshipsToDOM = (starships) => {
   console.log(`starship_count: `, starships.results.length)
   let html = ''
   html += `
+  <div class="results">
+  <h3>Star Wars API Results:</h3><br>
     <article class="flexItem">
       <section class="card">
         <p>There are ${starships.results.length} starships on page #4</p>
       </section>
-    </article>
+    </article></div>
   `
   document.getElementById('apiResults').innerHTML = html
 }
-
-// const displayPlanets = async () => {
-//   const planetData1 = await fetchPlanets(1)
-//   const planetData2 = await fetchPlanets(2)
-//   const planetData3 = await fetchPlanets(3)
-//   const planetData4 = await fetchPlanets(4)
-//   const planetData5 = await fetchPlanets(5)
-//   const planetData6 = await fetchPlanets(6)
-//   let allPlanets = [...planetData1, ...planetData2, ...planetData3, ...planetData4, ...planetData5, ...planetData6]
-//   console.log('allPlanets: ',allPlanets)
-//   allPlanets.sort((a, b) => a.diameter - b.diameter)
-//   renderPlanetsToDOM(allPlanets)
-// }
-
-//call the fetch planets function incrementing the page number each time. 
-//each time a page is fetched add it to allPlanets array
-//but I need to stop at some point based on something
 
 let runCodeButton = document.querySelector('#runCode')
 
 const planetRadio = document.querySelector('input[id="displayPlanetsRadio"]')
 const lukeRadio = document.querySelector('input[id="displayLukeRadio"]')
 const starshipRadio = document.querySelector('input[id="displayStarshipsRadio"]')
-const showCode = document.querySelector('#showCode')
+const filmRadio = document.querySelector('input[id="displayFilmsRadio"]')
 
 runCodeButton.addEventListener("click", () => {
   if (planetRadio.checked) {
-    displayPlanetBasic(1)
+    displayPlanetLoop()
+    planetRadio.checked = false;
   } else if (lukeRadio.checked) {
     displayLuke()
+    lukeRadio.checked = false
+    document.getElementById('codeSnippets').innerHTML = `
+    <div class="codeSnippetStyle">
+    <h3>JavaScript:</h3>
+    <img src="styles/fetchLukeCode.jpg"></div>
+    `
   } else if (starshipRadio.checked) {
     displayStarships(4)
+    starshipRadio.checked = false
+  } else if (filmRadio.checked) {
+    displayFilms()
+    filmRadio.checked = false
   }
 })
 
@@ -129,7 +135,8 @@ deleteButton.addEventListener("click", () => {
 document.addEventListener("click", (event) => {
   if (event.target.id === "showCode") {
     document.getElementById('codeSnippets').innerHTML = `
-    <img src="styles/fetchLukeCode.jpg">
+    <div class="codeSnippetStyle">
+    <img src="styles/fetchLukeCode.jpg"></div>
     `
   }
 })
@@ -158,26 +165,19 @@ const displayPlanetLoop = async () => {
 
 }
 
-const displayPlanetBasic = async (page) => {
-  const data = await fetchPlanets(page)
-  const results = data.results
-  results.sort((a,b) => a.diameter - b.diameter)
-  renderPlanetsToDOM(results)
-}
-
 const renderPlanetsToDOM = (planets) => {
-  let html = ''
+  let html = `<div class="results"><h3>Star Wars API Results:</h3><br>`
+  let planetNum = 1
   for (const planet of planets) {
     html += 
-    `<article>
-    <section class="card">
-      <h3>Planet: ${planet.name}
-      <ul>
-        <li>Diameter: ${planet.diameter}</li>
-      </ul>
-    </section>
-</article>`
+    ` 
+
+    Planet #${planetNum}: ${planet.name}<br>
+      Diameter: ${planet.diameter}<br><br>`
+
+      planetNum++
   }
+  html += `</div>`
 
   document.getElementById('apiResults').innerHTML = html
 
