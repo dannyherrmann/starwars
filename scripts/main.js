@@ -33,10 +33,12 @@ const displayLuke = async () => {
 }
 
 const renderLukeToDOM = (data) => {
+  document.getElementById('apiResults').innerHTML = ''
+  document.getElementById('codeSnippets').innerHTML = ''
   let html = ''
   html += `
+  <h3>Star Wars API Results:</h3>
   <div class="results">
-  <h3>Star Wars API Results:</h3><br>
     <article id="code">
       <section class="card">
         <p>Name: ${data.name}</p>
@@ -45,6 +47,10 @@ const renderLukeToDOM = (data) => {
     </article></div>
   `
   document.getElementById('apiResults').innerHTML = html
+  document.getElementById('codeSnippets').innerHTML = 
+  `<h3>JavaScript:</h3>
+  <iframe src="fetchLukeCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" >
+  </iframe>`
 }
 
 
@@ -57,6 +63,8 @@ const displayFilms = async () => {
 }
 
 const renderFilmsToDOM = (films) => {
+  document.getElementById('apiResults').innerHTML = ''
+  document.getElementById('codeSnippets').innerHTML = ''
   let html = `<div class="results"><h3>Star Wars API Results:</h3><br>`
   for (const film of films) {
     html += `
@@ -73,6 +81,10 @@ const renderFilmsToDOM = (films) => {
 
   html += `</div>`
   document.getElementById('apiResults').innerHTML = html
+  document.getElementById('codeSnippets').innerHTML = `
+  <div class="codeSnippetStyle">
+  <h3>JavaScript:</h3>
+  <img src="styles/films-code.jpg"></div>`
 
 }
 
@@ -83,7 +95,8 @@ const displayStarships = async (num) => {
 }
 
 const renderStarshipsToDOM = (starships) => {
-  console.log(`starship_count: `, starships.results.length)
+  document.getElementById('apiResults').innerHTML = ''
+  document.getElementById('codeSnippets').innerHTML = ''
   let html = ''
   html += `
   <div class="results">
@@ -95,6 +108,10 @@ const renderStarshipsToDOM = (starships) => {
     </article></div>
   `
   document.getElementById('apiResults').innerHTML = html
+  document.getElementById('codeSnippets').innerHTML = `
+  <div class="codeSnippetStyle">
+  <h3>JavaScript:</h3>
+  <img src="styles/starship-code.jpg"></div>`
 }
 
 let runCodeButton = document.querySelector('#runCode')
@@ -111,11 +128,6 @@ runCodeButton.addEventListener("click", () => {
   } else if (lukeRadio.checked) {
     displayLuke()
     lukeRadio.checked = false
-    document.getElementById('codeSnippets').innerHTML = `
-    <div class="codeSnippetStyle">
-    <h3>JavaScript:</h3>
-    <img src="styles/fetchLukeCode.jpg"></div>
-    `
   } else if (starshipRadio.checked) {
     displayStarships(4)
     starshipRadio.checked = false
@@ -166,13 +178,13 @@ const displayPlanetLoop = async () => {
 }
 
 const renderPlanetsToDOM = (planets) => {
-  let html = `<div class="results"><h3>Star Wars API Results:</h3><br>`
+  document.getElementById('apiResults').innerHTML = ''
+  document.getElementById('codeSnippets').innerHTML = ''
+  let html = `<h3>Star Wars API Results:</h3><div class="results">`
   let planetNum = 1
   for (const planet of planets) {
     html += 
-    ` 
-
-    Planet #${planetNum}: ${planet.name}<br>
+    ` Planet #${planetNum}: ${planet.name}<br>
       Diameter: ${planet.diameter}<br><br>`
 
       planetNum++
@@ -180,13 +192,10 @@ const renderPlanetsToDOM = (planets) => {
   html += `</div>`
 
   document.getElementById('apiResults').innerHTML = html
+  document.getElementById('codeSnippets').innerHTML = `<h3>JavaScript:</h3><iframe src="fetchPlanetsCode.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" >
+  </iframe>`
 
 }
-
-// await displayLuke()
-// await displayFilms()
-// await displayStarships(4)
-// await displayPlanets()
 
 
 
