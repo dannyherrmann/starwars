@@ -23,20 +23,20 @@ const displayLuke = async () => {
   renderLukeToDOM(data)
 }
 
-
-
 const renderLukeToDOM = (data) => {
   let html = ''
   html += `
-    <article>
+    <article id="code">
       <section class="card">
         <p>Name: ${data.name}</p>
         <p>height: ${data.height}</p>
       </section>
-    </article>
+    </article><br>
+    <button id="showCode" type="button">SHOW CODE</button>
   `
   document.getElementById('apiResults').innerHTML = html
 }
+
 
 const displayFilms = async () => {
   const filmData = await fetchFilms()
@@ -107,6 +107,7 @@ let runCodeButton = document.querySelector('#runCode')
 const planetRadio = document.querySelector('input[id="displayPlanetsRadio"]')
 const lukeRadio = document.querySelector('input[id="displayLukeRadio"]')
 const starshipRadio = document.querySelector('input[id="displayStarshipsRadio"]')
+const showCode = document.querySelector('#showCode')
 
 runCodeButton.addEventListener("click", () => {
   if (planetRadio.checked) {
@@ -122,6 +123,15 @@ const deleteButton = document.querySelector('#delete')
 
 deleteButton.addEventListener("click", () => {
   document.getElementById('apiResults').innerHTML = ''
+  document.getElementById('codeSnippets').innerHTML = ''
+})
+
+document.addEventListener("click", (event) => {
+  if (event.target.id === "showCode") {
+    document.getElementById('codeSnippets').innerHTML = `
+    <img src="styles/fetchLukeCode.jpg">
+    `
+  }
 })
 
 const displayPlanetLoop = async () => {
