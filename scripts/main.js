@@ -41,7 +41,7 @@ const renderLukeToDOM = (data) => {
   document.getElementById("codeSnippets").innerHTML = "";
   let html = "";
   html += `
-  <h3 class="resultsHeader">Star Wars API Results:</h3>
+  <h3 class="resultsHeader"><a target="_blank" href="https://swapi.dev/api/people/1">Star Wars API Results:</a></h3>
   <div class="results">
     <article id="code">
       <section class="card">
@@ -170,7 +170,19 @@ const displayPlanetLoop = async () => {
     }
   } while (lastResult.next !== null);
 
+  for (const planet of allPlanets) {
+    if (planet.diameter === "unknown") {
+      planet.diameter = -1
+    }
+  }
+  
   allPlanets.sort((a, b) => a.diameter - b.diameter);
+
+  for (const planet of allPlanets) {
+    if (planet.diameter === -1) {
+      planet.diameter = "unknown"
+    }
+  }
   renderPlanetsToDOM(allPlanets);
 };
 
